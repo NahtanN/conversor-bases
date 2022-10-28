@@ -69,25 +69,35 @@ export default function Home() {
       case "2": {
         const result = binaryToBaseX(valueInput, baseConversion);
 
-        if (result) setResultValue(result);
+        if (result) return setResultValue(result);
+
+        showNotification({
+          message: "Ainda não implemetado!",
+          color: "yellow",
+        });
 
         break;
       }
-      case "8": {
-        const result = octalToBaseX(valueInput, baseConversion);
-        // setResultValue(result);
-        break;
-      }
+      // case "8": {
+      //   const result = octalToBaseX(valueInput, baseConversion);
+      //   // setResultValue(result);
+      //   break;
+      // }
       case "10": {
         const result = decimalToBaseX(valueInput, baseConversion);
         setResultValue(result);
         break;
       }
-      case "16": {
-        const result = hexadecimalToBaseX(valueInput, baseConversion);
-        // setResultValue(result);
-        break;
-      }
+      // case "16": {
+      //   const result = hexadecimalToBaseX(valueInput, baseConversion);
+      //   // setResultValue(result);
+      //   break;
+      // }
+      default:
+        showNotification({
+          message: "Ainda não implemetado!",
+          color: "yellow",
+        });
     }
   };
 
