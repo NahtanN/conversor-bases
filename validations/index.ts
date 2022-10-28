@@ -29,6 +29,7 @@ export const validateBaseRules = (value: string, base: BaseType) => {
         "B",
         "C",
         "D",
+        "E",
         "F",
       ];
       break;

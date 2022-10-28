@@ -10,6 +10,12 @@ import {
 import { showNotification } from "@mantine/notifications";
 import Head from "next/head";
 import { ChangeEvent, useEffect, useState } from "react";
+import {
+  binaryToBaseX,
+  decimalToBaseX,
+  hexadecimalToBaseX,
+  octalToBaseX,
+} from "../utils";
 import { BaseType, validateBaseRules } from "../validations";
 
 const bases = [
@@ -24,7 +30,8 @@ export default function Home() {
 
   const [valueBase, setValueBase] = useState<string | null>(null);
   const [baseConversion, setBaseConversion] = useState<string | null>(null);
-  const [valueInput, setValueInput] = useState(" ");
+  const [valueInput, setValueInput] = useState("");
+  const [resultValue, setResultValue] = useState("");
 
   const handleValidations = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.currentTarget.value;
@@ -50,13 +57,46 @@ export default function Home() {
   };
 
   const handleConvert = () => {
-    // switch value
+    if (!baseConversion || !valueBase) {
+      showNotification({
+        message: "Você precisa selecionar as bases antes de converter!",
+        color: "red",
+      });
+      return;
+    }
+
+    switch (valueBase as BaseType) {
+      case "2": {
+        const result = binaryToBaseX(valueInput, baseConversion);
+
+        if (result) setResultValue(result);
+
+        break;
+      }
+      case "8": {
+        const result = octalToBaseX(valueInput, baseConversion);
+        // setResultValue(result);
+        break;
+      }
+      case "10": {
+        const result = decimalToBaseX(valueInput, baseConversion);
+        setResultValue(result);
+        break;
+      }
+      case "16": {
+        const result = hexadecimalToBaseX(valueInput, baseConversion);
+        // setResultValue(result);
+        break;
+      }
+    }
   };
 
   useEffect(() => {
     if (valueBase === baseConversion) {
       setBaseConversion(null);
     }
+
+    setValueInput("");
   }, [valueBase]);
 
   return (
@@ -111,7 +151,7 @@ export default function Home() {
 
             <Button onClick={handleConvert}>Converter</Button>
 
-            <Box className={classes.box}>10</Box>
+            <Box className={classes.box}>{resultValue}</Box>
           </Paper>
         </Container>
       </div>
