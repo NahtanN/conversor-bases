@@ -1,5 +1,6 @@
-export const decimalToBaseX = (value: string, base: string) => {
-  const baseHexadecimal = "16";
+import { BaseType } from "../types";
+
+export const decimalToBaseX = (value: string, base: BaseType) => {
   const numValue = parseInt(value);
   const numBase = parseInt(base);
 
@@ -20,7 +21,7 @@ export const decimalToBaseX = (value: string, base: string) => {
     }
   }
 
-  if (base === baseHexadecimal) {
+  if (base === "16") {
     const hexaValues = results.map((resultValue) => {
       switch (resultValue) {
         case 10:
@@ -46,18 +47,56 @@ export const decimalToBaseX = (value: string, base: string) => {
   return results.join("");
 };
 
-export const baseXToDecimal = (value: string, base: number) => {
+export const baseXToDecimal = (value: string, base: BaseType) => {
   const valueChars = value.split("").reverse();
   let result = 0;
 
   switch (base) {
-    case 2: {
+    case "2": {
       valueChars.forEach((char, index) => {
         result += parseInt(char) * 2 ** index;
       });
       break;
     }
+    case "8": {
+      valueChars.forEach((char, index) => {
+        result += parseInt(char) * 8 ** index;
+      });
+      break;
+    }
+    case "16": {
+      valueChars.forEach((char, index) => {
+        let charValue: number;
+
+        switch (char) {
+          case "A":
+            charValue = 10;
+            break;
+          case "B":
+            charValue = 11;
+            break;
+          case "C":
+            charValue = 12;
+            break;
+          case "D":
+            charValue = 13;
+            break;
+          case "E":
+            charValue = 14;
+            break;
+          case "F":
+            charValue = 15;
+            break;
+          default:
+            charValue = parseInt(char);
+            break;
+        }
+
+        result += charValue * 16 ** index;
+      });
+      break;
+    }
   }
-  console.log(result);
+
   return result.toString();
 };

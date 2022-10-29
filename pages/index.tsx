@@ -10,13 +10,14 @@ import {
 import { showNotification } from "@mantine/notifications";
 import Head from "next/head";
 import { ChangeEvent, useEffect, useState } from "react";
+import { BaseType } from "../types";
 import {
   binaryToBaseX,
   decimalToBaseX,
   hexadecimalToBaseX,
   octalToBaseX,
 } from "../utils";
-import { BaseType, validateBaseRules } from "../validations";
+import { validateBaseRules } from "../validations";
 
 const bases = [
   { value: "2", label: "2 - Binário" },
@@ -58,11 +59,17 @@ export default function Home() {
 
   const handleConvert = () => {
     if (!baseConversion || !valueBase) {
-      showNotification({
+      return showNotification({
         message: "Você precisa selecionar as bases antes de converter!",
         color: "red",
       });
-      return;
+    }
+
+    if (!valueInput) {
+      return showNotification({
+        message: "Escreva alguma coisa antes de tentar converter!",
+        color: "red",
+      });
     }
 
     switch (valueBase as BaseType) {
@@ -71,28 +78,27 @@ export default function Home() {
 
         if (result) return setResultValue(result);
 
-        showNotification({
-          message: "Ainda não implemetado!",
-          color: "yellow",
-        });
+        break;
+      }
+      case "8": {
+        const result = octalToBaseX(valueInput, baseConversion);
+
+        if (result) return setResultValue(result);
 
         break;
       }
-      // case "8": {
-      //   const result = octalToBaseX(valueInput, baseConversion);
-      //   // setResultValue(result);
-      //   break;
-      // }
       case "10": {
-        const result = decimalToBaseX(valueInput, baseConversion);
+        const result = decimalToBaseX(valueInput, baseConversion as BaseType);
         setResultValue(result);
         break;
       }
-      // case "16": {
-      //   const result = hexadecimalToBaseX(valueInput, baseConversion);
-      //   // setResultValue(result);
-      //   break;
-      // }
+      case "16": {
+        const result = hexadecimalToBaseX(valueInput, baseConversion);
+
+        if (result) return setResultValue(result);
+
+        break;
+      }
       default:
         showNotification({
           message: "Ainda não implemetado!",

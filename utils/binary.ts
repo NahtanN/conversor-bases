@@ -1,13 +1,14 @@
-import { baseXToDecimal } from "./decimal";
-import { baseXToOctal } from "./octal";
+import { baseXToDecimal, decimalToBaseX } from "./decimal";
 
 export const binaryToBaseX = (value: string, base: string) => {
+  const decimalValue = baseXToDecimal(value, "2");
+
   switch (base) {
     case "8":
-      return baseXToOctal(value, 2);
+      return decimalToBaseX(decimalValue, "8");
     case "10":
-      return baseXToDecimal(value, 2);
-    // case "16":
-    //   return baseXToH(value, 2);
+      return decimalValue;
+    case "16":
+      return decimalToBaseX(decimalValue, "16");
   }
 };

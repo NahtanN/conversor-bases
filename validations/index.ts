@@ -1,4 +1,4 @@
-export type BaseType = "2" | "8" | "10" | "16";
+import { BaseType } from "../types";
 
 export const validateBaseRules = (value: string, base: BaseType) => {
   let rules: string[];
