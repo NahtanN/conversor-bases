@@ -1,10 +1,12 @@
 import {
+  Anchor,
   Box,
   Button,
   Container,
   createStyles,
   Paper,
   Select,
+  Text,
   TextInput,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
@@ -168,6 +170,37 @@ export default function Home() {
             <Button onClick={handleConvert}>Converter</Button>
 
             <Box className={classes.box}>{resultValue}</Box>
+
+            <section>
+              <Text color="dimmed" size="sm" align="center" mt={5}>
+                Link para o repositório no{" "}
+                <Anchor<"a">
+                  href="https://github.com/NahtanN/conversor-bases"
+                  size="sm"
+                  target={"_blank"}
+                >
+                  GitHub
+                </Anchor>
+              </Text>
+              <Text color="dimmed" size="sm" align="center" mt={0}>
+                Criado por{" "}
+                <Anchor<"a">
+                  href="https://github.com/NahtanN"
+                  size="sm"
+                  target={"_blank"}
+                >
+                  Nathan Gomes
+                </Anchor>{" "}
+                e{" "}
+                <Anchor<"a">
+                  href="https://github.com/ichiruto"
+                  size="sm"
+                  target={"_blank"}
+                >
+                  Rodrigo Teixeira
+                </Anchor>
+              </Text>
+            </section>
           </Paper>
         </Container>
       </div>
